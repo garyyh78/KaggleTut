@@ -1,9 +1,14 @@
 import numpy as np
 import pandas as pd
+import os
+print( os.getcwd(), "\n" )
+
 from sklearn.model_selection import cross_val_score, StratifiedKFold
+
 from sklearn.neural_network import MLPClassifier
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier, GradientBoostingClassifier
 
 train = pd.read_csv("./titanic/train.csv")
 test = pd.read_csv("./titanic/test.csv")
@@ -47,9 +52,13 @@ print(Z.isnull().sum())
 kfold = StratifiedKFold(n_splits=10)
 
 classifiers = []
+classifiers.append(GradientBoostingClassifier())
 classifiers.append(SVC())
 classifiers.append(DecisionTreeClassifier())
 classifiers.append(MLPClassifier())
+classifiers.append(RandomForestClassifier())
+classifiers.append(AdaBoostClassifier())
+
 
 for clf in classifiers:
     res = cross_val_score(clf, X, Y, scoring="accuracy", cv=kfold)
@@ -60,4 +69,3 @@ P = classifiers[0].predict(Z)
 StackingSubmission = pd.DataFrame({'PassengerId': test['PassengerId'], 'Survived': P})
 StackingSubmission.to_csv("./titanic1.csv", index=False)
 
-# test commit3

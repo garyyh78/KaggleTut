@@ -60,4 +60,4 @@ P = classifiers[0].predict(Z)
 StackingSubmission = pd.DataFrame({'PassengerId': test['PassengerId'], 'Survived': P})
 StackingSubmission.to_csv("./titanic1.csv", index=False)
 
-# test commit2
+# test commit3
